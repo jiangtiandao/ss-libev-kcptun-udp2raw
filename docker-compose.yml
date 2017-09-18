@@ -4,14 +4,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ss-libev
+    network_mode: "host"
   kcptun:
     image: xtaci/kcptun:v20170904
-    command: server -l 0.0.0.0:29900 -t ss:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
+    command: server -l 0.0.0.0:29900 -t 0.0.0.0:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
+    network_mode: "host"
   udp2raw:
     build:
       context: .
       dockerfile: Dockerfile.udp2raw
-    command: ./udp2raw -s -l 0.0.0.0:10998 -r kcptun:29900 -k "xxxxxxxxx" --raw-mode faketcp
+    command: ./udp2raw -s -l 0.0.0.0:10998 -r 0.0.0.0:29900 -k "xxxxxxxxx" --raw-mode faketcp
     ports:
-    - "10998:10998/udp"
     - "10998:10998"
+    network_mode: "host"
