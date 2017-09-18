@@ -1,0 +1,5 @@
+FROM buildpack-deps:stretch as builder
+WORKDIR /
+RUN  git clone https://github.com/wangyu-/udp2raw-tunnel.git  && cd udp2raw-tunnel && make
+FROM debian:stretch
+COPY --from=builder /udp2raw-tunnel/udp2raw .
