@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.ss-libev
   kcptun:
     image: xtaci/kcptun:v20170904
-    command: ./server -l 0.0.0.0:29900 -t ss:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
+    command: server -l 0.0.0.0:29900 -t ss:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
   udp2raw:
     build:
       context: .
