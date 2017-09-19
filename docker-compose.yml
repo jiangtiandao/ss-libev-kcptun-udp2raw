@@ -1,14 +1,14 @@
 version: '3'
 services:
   ss:
-    build:
-      context: .
-      dockerfile: Dockerfile.ss-libev
-    network_mode: "host"
+    image: rheinmetal/ss-libev-docker
+    devices: 
+    - "/dev/random:/dev/random"
   kcptun:
     image: xtaci/kcptun:v20170904
     command: server -l 0.0.0.0:29900 -t 0.0.0.0:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
-    network_mode: "host"
+    ports:
+    - "10998:29900"
   udp2raw:
     build:
       context: .
