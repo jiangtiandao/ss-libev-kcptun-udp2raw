@@ -4,16 +4,16 @@ services:
     image: rheinmetal/ss-libev-docker
     devices: 
     - "/dev/random:/dev/random"
+    environment:
+      DNS_ADDR: "114.114.114.114"
+      DNS_ADDR_2: "114.114.115.115"
+      METHOD: "aes-256-gcm"
   kcptun:
     image: xtaci/kcptun:v20170904
-    command: server -l 0.0.0.0:29900 -t 0.0.0.0:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
+    command: server -l 0.0.0.0:29900 -t ss:8388 -key "xxxxxxx" -mode fast2  -crypt aes-128  -dscp 46 -mtu 1300
     ports:
     - "10998:29900"
   udp2raw:
-    build:
-      context: .
-      dockerfile: Dockerfile.udp2raw
+    image: daocloud.io/rheinmetal/udp2raw:master-f9900ee
     command: ./udp2raw -s -l 0.0.0.0:10998 -r 0.0.0.0:29900 -k "xxxxxxxxx" --raw-mode faketcp
-    ports:
-    - "10998:10998"
     network_mode: "host"
