@@ -35,5 +35,5 @@ services:
     - "10998:29900/udp"
   udp2raw:
     image: daocloud.io/rheinmetal/udp2raw:master-f9900ee
-    command: ./udp2raw -s -l 0.0.0.0:10998 -r 0.0.0.0:29900 -k "xxxxxxxxx" --raw-mode faketcp
+    command: ./udp2raw -s -l 0.0.0.0:10998 -r 127.0.0.1:29900 -k "xxxxxxxxx" --raw-mode faketcp
     network_mode: "host"
